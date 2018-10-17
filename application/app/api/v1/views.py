@@ -17,3 +17,7 @@ class Products(Resource):
         product_info['id'] = 1 + len(products)
         products.append(product_info)
         return make_response(jsonify({"Status" : "Created", "Message" : "Product Saved Successfully", "products" : products}), 201)
+
+
+    def get(self):
+        return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Products" : products}), 200)
