@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import jsonify, request, make_response
 
-from .models import products
+from .models import products, sales
 
 
 class Products(Resource):
@@ -29,3 +29,18 @@ class SingleProduct(Resource):
                 return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Product" : product}), 200)
         else:
             return make_response(jsonify({"Status" : "Ok", "Message" : "No product with such id"}), 200)
+
+
+class Sales(Resource):
+
+    def post(self):
+        sale_info = request.get_json()
+
+        sale_info['name']
+        sale_info['category']
+        sale_info['selling_price']
+        sale_info['description']
+        sale_info['id'] = 1 + len(sales)
+
+        sales.append(sale_info)
+        return make_response(jsonify({"Status" : "Created", "Message" : "Sales created successfully", "Sales" : sales}), 201)
