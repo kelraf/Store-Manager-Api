@@ -47,3 +47,8 @@ class TestApi(unittest.TestCase):
         response3 = self.app.post("/sales", data = json.dumps(self.sales_info), content_type = "application/json")
 
         self.assertEqual(response3.status_code, 201)
+
+    def test_get_all_sales_orders(self):
+        response4 = self.app.get("/sales")
+
+        self.assertEqual(response4.status_code, 200)

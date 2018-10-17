@@ -44,3 +44,10 @@ class Sales(Resource):
 
         sales.append(sale_info)
         return make_response(jsonify({"Status" : "Created", "Message" : "Sales created successfully", "Sales" : sales}), 201)
+
+
+    def get(self):
+        if len(sales) == 0:
+            return make_response(jsonify({"Status" : "Ok", "Message" : "Sales record is empty", "Sales" : sales}), 200)
+        else:
+            return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Sales" : sales}), 200)
