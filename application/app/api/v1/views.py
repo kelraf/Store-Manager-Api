@@ -51,3 +51,14 @@ class Sales(Resource):
             return make_response(jsonify({"Status" : "Ok", "Message" : "Sales record is empty", "Sales" : sales}), 200)
         else:
             return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Sales" : sales}), 200)
+
+
+class SingleSaleOrder(Resource):
+
+    def get(self, id):
+        for sale in sales:
+            if sale['id'] == id:
+                return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Sale" : sale}), 200)
+
+        else:
+            return make_response(jsonify({"Status" : "Ok", "Message" : "No order with that id"}), 200)

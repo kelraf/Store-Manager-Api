@@ -52,3 +52,8 @@ class TestApi(unittest.TestCase):
         response4 = self.app.get("/sales")
 
         self.assertEqual(response4.status_code, 200)
+
+    def test_get_a_specific_order(self):
+        response5 = self.app.get("/sales/2")
+
+        self.assertEqual(response5.status_code, 200)
