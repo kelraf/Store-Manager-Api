@@ -21,3 +21,11 @@ class Products(Resource):
 
     def get(self):
         return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Products" : products}), 200)
+
+class SingleProduct(Resource):
+    def get(self, id):
+        for product in products:
+            if product['id'] == id:
+                return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Product" : product}), 200)
+        else:
+            return make_response(jsonify({"Status" : "Ok", "Message" : "No product with such id"}), 200)

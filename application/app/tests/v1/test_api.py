@@ -28,3 +28,8 @@ class TestApi(unittest.TestCase):
         response1 = self.app.get("/products")
 
         self.assertEqual(response1.status_code, 200)
+
+    def test_get_product_by_id(self):
+        response2 = self.app.get("/products/1")
+
+        self.assertEqual(response2.status_code, 200)
