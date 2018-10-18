@@ -1,0 +1,21 @@
+class Config(object):
+
+    """ base config """
+    DEBUG = False
+    TESTING = False
+
+class DevelopmentConfig(Config):
+    """ Development configuration """
+    DEBUG = True
+    TESTING = True
+
+
+class TestingConfig(Config):
+    """ Testing Configurations """
+    DEBUG = True
+    TESTING = True
+
+app_config = {
+    "development" : DevelopmentConfig,
+    "testing" : TestingConfig
+}
