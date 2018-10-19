@@ -33,18 +33,23 @@ class SingleProduct(Resource):
 
 class Sales(Resource):
 
-    def post(self):
-        sale_info = request.get_json()
+    def post(self):        
 
-        sale_info['name']
-        sale_info['category']
-        sale_info['selling_price']
-        sale_info['description']
-        sale_info['id'] = 1 + len(sales)
-
-        sales.append(sale_info)
-        return make_response(jsonify({"Status" : "Created", "Message" : "Sales created successfully", "Sales" : sales}), 201)
-
+        product_id = request.get_json()
+        product_id['product_id']
+        for product_d in products:
+            if product_d['id'] == product_id['product_id']:
+                sales_info = {}
+                sales_info['name'] = product_d['name']
+                sales_info['category'] = product_d['category']
+                sales_info['selling_price'] = product_d['selling_price']
+                sales_info['product_id'] = product_d['id']
+                sales_info['id'] = 1 + len(sales)
+                sales.append(sales_info)
+                products.remove(product_d)
+                return make_response(jsonify({"Status" : "Created", "Message" : "Sales created successfully", "Sales" : sales}), 201)
+        else:
+            return make_response(jsonify({"Status" : "Ok", "Message" : "No product with that id"}))
 
     def get(self):
         if len(sales) == 0:
