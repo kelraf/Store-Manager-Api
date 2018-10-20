@@ -1,11 +1,15 @@
 from flask_restful import Resource
 from flask import jsonify, request, make_response
 
-from .models.products import products, sales, ProductsDetails
-
+from .models.products import ProductsDetails, SalesDetails
+from .models.users import UserDetails
 
 product = ProductsDetails()
+sales = SalesDetails()
 
+user = UserDetails()
+
+""" Products Endpoints """
 
 class Products(Resource):
 
@@ -36,39 +40,53 @@ class SingleProduct(Resource):
         response = product.get_product_by_id(id)
         return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Product" : response}), 200)
 
+
+""" Sales Endpoints """
+
 class Sales(Resource):
 
     def post(self):        
 
-        product_id = request.get_json()
-        product_id['product_id']
-        for product_d in products:
-            if product_d['id'] == product_id['product_id']:
-                sales_info = {}
-                sales_info['name'] = product_d['name']
-                sales_info['category'] = product_d['category']
-                sales_info['selling_price'] = product_d['selling_price']
-                sales_info['product_id'] = product_d['id']
-                sales_info['id'] = 1 + len(sales)
-                sales.append(sales_info)
-                products.remove(product_d)
-                return make_response(jsonify({"Status" : "Created", "Message" : "Sales created successfully", "Sales" : sales}), 201)
+        sales_info = request.get_json()
+        name = sales_info['name']
+        category = sales_info['category']
+        selling_price = sales_info['selling_price']
+        response = sales.create_sales(name, category, selling_price)
+        if response == True:
+            return make_response(jsonify({"Status" : "Created", "Message" : "Sale Created Successfully", "Sales" : sales.sales_list}), 201)
         else:
-            return make_response(jsonify({"Status" : "Ok", "Message" : "No product with that id"}))
+            return make_response(jsonify({"Status" : "Ok", "Message" : response})) 
+
 
     def get(self):
-        if len(sales) == 0:
-            return make_response(jsonify({"Status" : "Ok", "Message" : "Sales record is empty", "Sales" : sales}), 200)
-        else:
-            return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Sales" : sales}), 200)
-
+       response = sales.get_all_sales()
+       return make_response(jsonify({"Status" : "Ok", "Message" : response, "Sales" : sales.sales_list}), 200)
 
 class SingleSaleOrder(Resource):
 
     def get(self, id):
-        for sale in sales:
-            if sale['id'] == id:
-                return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Sale" : sale}), 200)
+        response = sales.get_sale_by_id(id)
+        return make_response(jsonify({"Status" : "Ok", "Sale" : response}), 200)
+
+
+
+""" Users Endpoints """
+
+class UserDetail(Resource):
+    def post(self):
+        user_info = request.get_json()
+        
+        username = user_info['username']
+        email = user_info['email']
+        password = user_info['password']
+        confirm_password = user_info['confirm_password']
+
+        response1 = user.register(username, email, password, confirm_password)
+        if response1 == True:
+            return make_response(jsonify({"Status" : "Created", "Message" : "User created successfully", "User" : user.user_list}), 201)
 
         else:
-            return make_response(jsonify({"Status" : "Ok", "Message" : "No order with that id"}), 200)
+            return make_response(jsonify({"Status" : "Ok", "Message" : "User Not Created", "Reason" : response1}), 401)
+
+    def get(self):
+        pass
