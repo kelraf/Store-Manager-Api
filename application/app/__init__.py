@@ -3,7 +3,7 @@ from flask_restful import Api
 from instance.config import app_config
 
 from .api.v1.models.products import ProductsDetails
-from .api.v1.views import Products, SingleProduct, Sales, SingleSaleOrder, UserDetail
+from .api.v1.views import Products, SingleProduct, Sales, SingleSaleOrder, AttendantRegistration, LoginAttendant
 products = ProductsDetails()
 product_list = products.products_list
 
@@ -22,5 +22,6 @@ def create_app(config_name):
     api.add_resource(Sales, "/sales")
     api.add_resource(SingleSaleOrder, "/sales/<int:id>")
 
-    api.add_resource(UserDetail, "/users")
+    api.add_resource(AttendantRegistration, "/attendant")
+    api.add_resource(LoginAttendant, "/login")
     return app
