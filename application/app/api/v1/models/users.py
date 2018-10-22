@@ -39,6 +39,7 @@ class UserDetails():
                     user_infor['password'] = password
                     user_infor['confirm_password'] = confirm_password
                     user_infor['id'] = len(self.user_list) + 1
+                    user_infor['Admin'] = False
                     self.user_list.append(user_infor)
                     return True
                 else:
@@ -56,6 +57,7 @@ class UserDetails():
                 user_infor['password'] = password
                 user_infor['confirm_password'] = confirm_password
                 user_infor['id'] = len(self.user_list) + 1
+                user_infor['Admin'] = True
                 self.user_list.append(user_infor)
                 return True
             #if data is invalid return the message indicating the problem

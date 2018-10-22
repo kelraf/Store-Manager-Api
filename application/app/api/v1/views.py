@@ -61,7 +61,7 @@ class Sales(Resource):
 
     def get(self):
        response = sales.get_all_sales()
-       return make_response(jsonify({"Status" : "Ok", "Message" : response, "Sales" : sales.sales_list}), 200)
+       return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Sales" : sales.sales_list}), 200)
 
 class SingleSaleOrder(Resource):
 
@@ -91,47 +91,33 @@ class UserRegistration(Resource):
         else:
             return make_response(jsonify({"Status" : "Unauthorized", "Message" : "User Not Created", "Reason" : response}), 409)
 
-    #Get all attendants 
+    #Get all users 
     def get(self):
-        # attendant_info = request.get_json()
         response = user.get_all_user()
 
-        #Check if the function returns an empty attendants list
+        #Check if the function returns an empty users list
         if len(response) > 0:
             while len(response) != 0:
-                #If there is an user return user
-                return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Attendants" : response}), 200)
-            else:
-                return make_response(jsonify({"Status" : "No Content", "Message" : "The list of attendants is empty"}), 204)
+                #If there is a user return user
+                return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Users" : response}), 200)
+        else:
+            return make_response(jsonify({"Status" : "No Content", "Message" : "The list of users is empty"}), 204)
 
 """ Login Endpoint """
 class LoginUser(Resource):
 
-    # def post(self):
-    #     att_login = request.get_json()
+    def post(self):
+        user_login = request.get_json()
 
-    #     username = att_login['username']
-    #     password = att_login['password']
+        username = user_login['username']
+        password = user_login['password']
 
-    #     response = user.provide_user_list()
-    #     if len(response) > 0:
-    #         for response in response:
-    #             if response['username'] == username and response['password'] == password:
-    #                 return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Attendant" : response}), 202)
-    #         else:
-    #             return make_response(jsonify({"Status" : "Unauthorised", "Message" : "Username or password you provided does not exist"}), 401)
-    #     else:
-    #         return make_response(jsonify({"Status" : "Ok", "Message" : "Username or password you provided does not exist"}), 401)
-
-    # def post(self):
-        
-    #     auth = request.authorization
-
-    #     if not auth or not auth.username or not auth.password:
-    #         return make_response(jsonify({"message" : "Provide you details"}), 401)
-    #     else:
-    #         users = user.get_all_user()
-    #         if len(users) > 0:
-    #             for user in users:
-    #                 if user['username'] == auth.username and user['password'] == auth.password:
-    #                     token = jwt.encode()
+        responses = user.provide_user_list()
+        if len(responses) > 0:
+            for response in responses:
+                if response['username'] == username and response['password'] == password:
+                    return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Attendant" : response}), 202)
+            else:
+                return make_response(jsonify({"Status" : "Unauthorised", "Message" : "Username or password you provided does not exist"}), 401)
+        else:
+            return make_response(jsonify({"Status" : "No Content", "Message" : "There are no users in the list"}), 204)

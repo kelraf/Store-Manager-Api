@@ -60,20 +60,20 @@ class TestApi(unittest.TestCase):
         self.assertEqual(response5.status_code, 200)
 
     #Test registration with valid details
-    attendant_info_correct = {
+    user_info_correct = {
         "username" : "kelraf",
         "email" : "email@gmail.com",
         "password" : "password",
         "confirm_password" : "password"
     }
 
-    def test_post_attendant_registration_infor_success(self):
-        response6 = self.client().post("/api/v1/attendant", data = json.dumps(self.attendant_info_correct), content_type = "application/json")
+    def test_post_user_registration_infor_success(self):
+        response6 = self.client().post("/api/v1/user", data = json.dumps(self.user_info_correct), content_type = "application/json")
 
         self.assertEqual(response6.status_code, 201)
 
     #Test registration with invalid details 
-    attendant_info_wrong = {
+    user_info_wrong = {
         "username" : "kelra",
         "email" : "email@gmail.com",
         "password" : "password",
@@ -81,13 +81,13 @@ class TestApi(unittest.TestCase):
     }
 
 
-    def test_post_attendant_registration_infor_errors(self):
-        response7 = self.client().post("/api/v1/attendant", data = json.dumps(self.attendant_info_wrong), content_type = "application/json")
+    def test_post_user_registration_infor_errors(self):
+        response7 = self.client().post("/api/v1/user", data = json.dumps(self.user_info_wrong), content_type = "application/json")
 
         self.assertEqual(response7.status_code, 409)
 
-    #Test getting all the attendants
-    attendant_info_correct_one = {
+    #Test getting all the users
+    user_info_correct_one = {
         "username" : "kelrif",
         "email" : "emailraf@gmail.com",
         "password" : "password",
@@ -96,14 +96,14 @@ class TestApi(unittest.TestCase):
 
     def test_get_all_attendants_list_not_empty(self):
 
-        response8 = self.client().post("/api/v1/attendant", data = json.dumps(self.attendant_info_correct_one), content_type = "application/json")
-        response9 = self.client().get("/api/v1/attendant")
+        response8 = self.client().post("/api/v1/user", data = json.dumps(self.user_info_correct_one), content_type = "application/json")
+        response9 = self.client().get("/api/v1/user")
         
         self.assertEqual(response9.status_code, 200)
 
 
     #Data to register a user so as to login
-    attendant_info_correct_reg = {
+    user_info_correct_reg = {
         "username" : "kimjam",
         "email" : "emailrafw@gmail.com",
         "password" : "kim1234",
@@ -112,26 +112,26 @@ class TestApi(unittest.TestCase):
 
 
     #Data to login
-    att_login = {
+    user_login = {
         "username" : "kimjam",
         "password" : "kim1234"
     }
     
     def test_login_attendant_successfull(self):
-        response10 = self.client().post("api/v1/attendant", data = json.dumps(self.attendant_info_correct_reg), content_type = "application/json")
-        response11 = self.client().post("/api/v1/login", data = json.dumps(self.att_login), content_type = "application/json")
+        response10 = self.client().post("api/v1/user", data = json.dumps(self.user_info_correct_reg), content_type = "application/json")
+        response11 = self.client().post("/api/v1/login", data = json.dumps(self.user_login), content_type = "application/json")
 
         self.assertEqual(response11.status_code, 202)
 
 
     #Login unregistered attendant
-    unreg_att = {
+    unreg_user = {
         "username" : "rafking",
         "password" : "kim1234"
     }
     
-    def test_login_unregistered_attendant(self):
-        response12 = self.client().post("/api/v1/login", data = json.dumps(self.unreg_att), content_type = "application/json")
+    def test_login_unregistered_user(self):
+        response12 = self.client().post("/api/v1/login", data = json.dumps(self.unreg_user  ), content_type = "application/json")
 
         self.assertEqual(response12.status_code, 401)
 
