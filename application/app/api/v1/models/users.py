@@ -1,9 +1,9 @@
 import re
 
-class AttendantDetails():
+class UserDetails():
     def __init__(self):
         #A list to store the attendant Details
-        self.attendant_list = []
+        self.user_list = []
 
     #Validator
     def validate_data(self, username, email, password, confirm_password):
@@ -21,11 +21,11 @@ class AttendantDetails():
     #A method to register attendant
     def register(self, username, email, password, confirm_password):
         #A dict to store attendant info
-        attendant_infor = {}
+        user_infor = {}
 
-        if len(self.attendant_list) > 0:
+        if len(self.user_list) > 0:
             #loop through the list to check if the attendant with the provided email or username exists
-            for user in self.attendant_list:
+            for user in self.user_list:
                 if user['username'] == username or user['email'] == email:
                     return "Username or email already exists"
             else:
@@ -34,12 +34,12 @@ class AttendantDetails():
                 if validate == True:
 
                     #if data validation passes register the user
-                    attendant_infor['username'] = username
-                    attendant_infor['email'] = email
-                    attendant_infor['password'] = password
-                    attendant_infor['confirm_password'] = confirm_password
-                    attendant_infor['id'] = len(self.attendant_list) + 1
-                    self.attendant_list.append(attendant_infor)
+                    user_infor['username'] = username
+                    user_infor['email'] = email
+                    user_infor['password'] = password
+                    user_infor['confirm_password'] = confirm_password
+                    user_infor['id'] = len(self.user_list) + 1
+                    self.user_list.append(user_infor)
                     return True
                 else:
                     #if data is invalid return the message indicating the problem
@@ -51,24 +51,24 @@ class AttendantDetails():
             if validate == True:
                 #The data is valid 
                 #Register the user
-                attendant_infor['username'] = username
-                attendant_infor['email'] = email
-                attendant_infor['password'] = password
-                attendant_infor['confirm_password'] = confirm_password
-                attendant_infor['id'] = len(self.attendant_list) + 1
-                self.attendant_list.append(attendant_infor)
+                user_infor['username'] = username
+                user_infor['email'] = email
+                user_infor['password'] = password
+                user_infor['confirm_password'] = confirm_password
+                user_infor['id'] = len(self.user_list) + 1
+                self.user_list.append(user_infor)
                 return True
             #if data is invalid return the message indicating the problem
             else:
                 return validate
 
     #A method to get all users
-    def get_all_attendants(self):
-        attendants = self.attendant_list
-        return attendants
+    def get_all_user(self):
+        user = self.user_list
+        return user
 
     #A method to login an attendant
-    def provide_attendants_list(self):
+    def provide_user_list(self):
 
-        attendants = self.attendant_list
-        return attendants
+        user = self.user_list
+        return user

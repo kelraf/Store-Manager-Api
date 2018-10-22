@@ -1,13 +1,14 @@
 from flask_restful import Resource, reqparse
 from flask import jsonify, request, make_response
 
+
 from .models.products import ProductsDetails, SalesDetails
-from .models.users import AttendantDetails
+from .models.users import UserDetails
 
 product = ProductsDetails()
 sales = SalesDetails()
 
-attendant = AttendantDetails()
+user = UserDetails()
 
 """ Products Endpoints """
 
@@ -74,18 +75,18 @@ class SingleSaleOrder(Resource):
 
 """ Registration Endpoints """
 
-class AttendantRegistration(Resource):
+class UserRegistration(Resource):
     def post(self):
-        attendant_info = request.get_json()
+        user_info = request.get_json()
 
-        username = attendant_info['username']
-        email = attendant_info['email']
-        password = attendant_info['password']
-        confirm_password = attendant_info['confirm_password']
+        username = user_info['username']
+        email = user_info['email']
+        password = user_info['password']
+        confirm_password =user_info['confirm_password']
 
-        response = attendant.register(username, email, password, confirm_password)
+        response = user.register(username, email, password, confirm_password)
         if response == True:
-            return make_response(jsonify({"Status" : "Created", "Message" : "User created successfully", "User" : attendant.attendant_list}), 201)
+            return make_response(jsonify({"Status" : "Created", "Message" : "User created successfully", "User" : user.user_list}), 201)
 
         else:
             return make_response(jsonify({"Status" : "Unauthorized", "Message" : "User Not Created", "Reason" : response}), 409)
@@ -93,29 +94,44 @@ class AttendantRegistration(Resource):
     #Get all attendants 
     def get(self):
         # attendant_info = request.get_json()
-        response = attendant.get_all_attendants()
+        response = user.get_all_user()
 
         #Check if the function returns an empty attendants list
         if len(response) > 0:
             while len(response) != 0:
-                #If there is an attendant return attendant
+                #If there is an user return user
                 return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Attendants" : response}), 200)
             else:
                 return make_response(jsonify({"Status" : "No Content", "Message" : "The list of attendants is empty"}), 204)
 
 """ Login Endpoint """
-class LoginAttendant(Resource):
+class LoginUser(Resource):
 
-    def post(self):
-        att_login = request.get_json()
+    # def post(self):
+    #     att_login = request.get_json()
 
-        username = att_login['username']
-        password = att_login['password']
+    #     username = att_login['username']
+    #     password = att_login['password']
 
-        response = attendant.provide_attendants_list()
-        if len(response) > 0:
-            for response in response:
-                if response['username'] == username and response['password'] == password:
-                    return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Attendant" : response}), 202)
-            else:
-                return make_response(jsonify({"Status" : "Ok", "Message" : "Username or password you provided does not exist"}), 401)
+    #     response = user.provide_user_list()
+    #     if len(response) > 0:
+    #         for response in response:
+    #             if response['username'] == username and response['password'] == password:
+    #                 return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Attendant" : response}), 202)
+    #         else:
+    #             return make_response(jsonify({"Status" : "Unauthorised", "Message" : "Username or password you provided does not exist"}), 401)
+    #     else:
+    #         return make_response(jsonify({"Status" : "Ok", "Message" : "Username or password you provided does not exist"}), 401)
+
+    # def post(self):
+        
+    #     auth = request.authorization
+
+    #     if not auth or not auth.username or not auth.password:
+    #         return make_response(jsonify({"message" : "Provide you details"}), 401)
+    #     else:
+    #         users = user.get_all_user()
+    #         if len(users) > 0:
+    #             for user in users:
+    #                 if user['username'] == auth.username and user['password'] == auth.password:
+    #                     token = jwt.encode()
