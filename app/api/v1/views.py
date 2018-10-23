@@ -116,7 +116,7 @@ class LoginUser(Resource):
         if len(responses) > 0:
             for response in responses:
                 if response['username'] == username and response['password'] == password:
-                    return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "Attendant" : response}), 202)
+                    return make_response(jsonify({"Status" : "Ok", "Message" : "Successfull", "User" : response}), 202)
             else:
                 return make_response(jsonify({"Status" : "Unauthorised", "Message" : "Username or password you provided does not exist"}), 401)
         else:
