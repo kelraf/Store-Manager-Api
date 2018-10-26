@@ -7,8 +7,9 @@ class UserDetails():
 
     #Validator
     def validate_data(self, username, email, password, confirm_password):
-        if not re.match("^[a-zA-Z0-9_]*$", username):
-            return "Username should only contain alphanumeric charackers"
+        if not re.match("^[a-zA-Z0-9_]*$", username)\
+        or not re.match("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email):
+            return "Username or email can only contain alphanumeric characters"
         elif len(username.strip()) < 6:
             return "Username should be atleast six characters long"
         elif len(password) < 6:

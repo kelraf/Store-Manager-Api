@@ -3,7 +3,7 @@ from flask_restful import Api
 from instance.config import app_config
 
 from .api.v1.models.products import ProductsDetails
-from .api.v1.views import Products, SingleProduct, Sales, SingleSaleOrder, UserRegistration, LoginUser
+from .api.v1.views import Products, SingleProduct, SingleSaleOrder, Sales, UserRegistration, LoginUser
 products = ProductsDetails()
 product_list = products.products_list
 
