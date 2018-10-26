@@ -74,10 +74,10 @@ class Sales(Resource):
 
 class SingleSaleOrder(Resource):
 
-    def get(self, sales_id):
+    def get(self, id):
         sales = sales_list
         for sale in sales:
-            if sale['id'] == sales_id:
+            if sale['id'] == id:
                 return make_response(jsonify({"Status" : "Ok", "Sale" : sale}), 200)
         else:
             return make_response(jsonify({"Status" : "Ok", "Message" : "No sale with that id is exists"}), 200)
