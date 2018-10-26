@@ -64,7 +64,7 @@ class Sales(Resource):
                     sales_list.append(sales_infor)
                     return make_response(jsonify({"Status" : "Created", "Message" : "Sale Created Successfully", "Sales" :sales_list }), 201)
             else:
-                return make_response(jsonify({"Status" : "Ok", "Message" : "No product in the list has such id"})) 
+                return make_response(jsonify({"Status" : "Not Found", "Message" : "No product in the list has such id"}), 404) 
         else:
             return make_response(jsonify({"Status" : "Ok", "Message" : "No product in the the store"})) 
 
@@ -80,7 +80,7 @@ class SingleSaleOrder(Resource):
             if sale['id'] == id:
                 return make_response(jsonify({"Status" : "Ok", "Sale" : sale}), 200)
         else:
-            return make_response(jsonify({"Status" : "Ok", "Message" : "No sale with that id is exists"}), 200)
+            return make_response(jsonify({"Status" : "Not Found", "Message" : "No sale with that id is exists"}), 404)
 
 
 

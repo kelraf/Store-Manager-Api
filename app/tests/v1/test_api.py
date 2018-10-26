@@ -30,6 +30,16 @@ class TestApi(unittest.TestCase):
 
         self.assertEqual(response.status_code, 201)
 
+    # invalid_product_id = {
+    #     "product_id" : 78
+    # }
+
+    # def test_create_sales_with_product_id_that_doesnot_exist(self):
+    #     response20 = self.client().post("/api/v1/products", data = json.dumps(self.info), content_type = "application/json")
+    #     response21 = self.client().post("/api/v1/sales", data = json.dumps(self.invalid_product_id), content_type = "application/json")
+
+    #     self.assertDictEqual(response21.status_code, 404)
+
     def test_get_all_products(self):
         response1 = self.client().get("/api/v1/products")
 
